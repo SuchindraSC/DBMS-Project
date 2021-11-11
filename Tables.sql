@@ -1,7 +1,7 @@
 
 -- Creating table for hiring candidate with id as primary key
 CREATE TABLE hired_candidates (
-  id int NOT NULL,
+  id int identity(1,1) primary key,
   first_name varchar(100) NOT NULL,
   middle_name nvarchar(100) DEFAULT NULL,
   last_name varchar(100) NOT NULL,
@@ -20,13 +20,12 @@ CREATE TABLE hired_candidates (
   status nvarchar(20) NOT NULL,
   creator_stamp datetime DEFAULT NULL,
   creator_user int DEFAULT NULL,
-  PRIMARY KEY (id)
 ) 
 
 
 --Creatin table for fellowship candidate with id as primary key
 CREATE TABLE fellowship_candidates (
-  id int NOT NULL,
+  id int identity(1,1) primary key,
   first_name varchar(100) NOT NULL,
   middle_name varchar(100) DEFAULT NULL,
   last_name varchar(100) NOT NULL,
@@ -60,12 +59,11 @@ CREATE TABLE fellowship_candidates (
   remark nvarchar(150) DEFAULT NULL,
   creator_stamp datetime DEFAULT NULL,
   creator_user int DEFAULT NULL,
-  PRIMARY KEY (id)
 );
 
 --Created table for Candidates Personal Details Check
 CREATE TABLE candidates_personal_det_check (
-  id int NOT NULL,
+  id int identity(1,1) primary key,
   candidate_id  int NOT NULL,
   field_name int NOT NULL,
   is_verified int DEFAULT NULL,
@@ -77,8 +75,7 @@ CREATE TABLE candidates_personal_det_check (
 
 --Created table for Candidate Bank Details Table with candidate id as foreign key and id as primary key
 CREATE TABLE candidate_bank_det(
-  id int NOT NULL,
-  PRIMARY KEY (id),
+  id int identity(1,1) primary key,
   candidate_id int NOT NULL,
   name varchar(100) NOT NULL,
   account_num int NOT NULL,
@@ -97,8 +94,7 @@ CREATE TABLE candidate_bank_det(
 
 --Created table for Candidate Qualification Table with candidate id as foreign key and id as primary key
 CREATE TABLE candidate_qualification(
-  id int NOT NULL,
-  PRIMARY KEY (id),
+  id int identity(1,1) primary key,
   candidate_id int NOT NULL,
   diploma int  DEFAULT 0,
   degree_name varchar NOT NULL,
@@ -123,7 +119,7 @@ CREATE TABLE candidate_qualification(
 
   --Created table for Candidate Education Detailed Check
  CREATE TABLE candidates_education_det_check (
-  id int NOT NULL,
+  id int identity(1,1) primary key,
   candidate_id  int NOT NULL,
   field_name int NOT NULL,
   is_verified int DEFAULT NULL,
@@ -135,8 +131,7 @@ CREATE TABLE candidate_qualification(
 
 --Created table for Candidate Documents with candidate id as foreign key 
 CREATE TABLE candidate_docs(
-  id int NOT NULL,
-  PRIMARY KEY (id),
+  id int identity(1,1) primary key,
   candidate_id int NOT NULL,
   doc_type nvarchar(20) DEFAULT NULL,
   doc_path nvarchar(500) DEFAULT NULL,
@@ -154,41 +149,37 @@ CREATE TABLE user_roles (
 
 --Created table for Company Table with id as primary key
 CREATE TABLE company(
-  id int NOT NULL,
+  id int identity(1,1) primary key,
   name int NOT NULL,
   address nvarchar(150) DEFAULT NULL,
   location nvarchar(50) DEFAULT NULL,
   status int DEFAULT 1,
-  creator_stamp datetime DEFAULT NULL,
-  creator_user int DEFAULT NULL,
-  PRIMARY KEY (id)
+  creator_stamp datetime DEFAULT NULL
 );
 
 --Created table for Techstack Table with id as primary key
 CREATE TABLE tech_stack (
-  id int NOT NULL,
+  id int identity(1,1) primary key,
   tech_name varchar(50) NOT NULL,
   image_path nvarchar(500) DEFAULT NULL,
   framework text DEFAULT NULL,
   cur_status char(1) DEFAULT NULL,
   creator_stamp datetime DEFAULT NULL,
-  creator_user int DEFAULT NULL,
-  PRIMARY KEY (id)
+  creator_user int DEFAULT NULL
 );
 
 --Created table for Tech Type with id as primary key
 CREATE TABLE tech_type (
-  id int NOT NULL,
+  id int identity(1,1) primary key,
   type_name varchar(50) NOT NULL,
   cur_status char(1) DEFAULT NULL,
   creator_stamp datetime DEFAULT NULL,
-  creator_user int DEFAULT NULL,
-  PRIMARY KEY (id)
+  creator_user int DEFAULT NULL
 );
 
 --Created table for Make Program with tech_stack_id & tech_type_id as foreign key
 CREATE TABLE maker_program(
-  id int NOT NULL,
+  id int identity(1,1) primary key,
   program_name int NOT NULL,
   program_type varchar(10) DEFAULT NULL,
   program_link text DEFAULT NULL,
@@ -200,62 +191,56 @@ CREATE TABLE maker_program(
   creator_stamp datetime DEFAULT NULL,
   creator_user int DEFAULT NULL,
   CONSTRAINT FK_maker_program_tech_stack_id FOREIGN KEY (tech_stack_id) REFERENCES tech_stack (id),
-  CONSTRAINT FK_maker_program_tech_type_id FOREIGN KEY (tech_type_id) REFERENCES tech_type (id),
-  PRIMARY KEY (id)
+  CONSTRAINT FK_maker_program_tech_type_id FOREIGN KEY (tech_type_id) REFERENCES tech_type (id)
 );
 
 --Created table for Lab Table
 CREATE TABLE lab(
-  id int NOT NULL,
   name varchar(50) DEFAULT NULL,
   location nvarchar(50) DEFAULT NULL,
   address  nvarchar(255) DEFAULT NULL,
   status int DEFAULT 1,
   creator_stamp datetime DEFAULT NULL,
-  creator_user int DEFAULT NULL,
-  PRIMARY KEY (id)
+  creator_user int DEFAULT NULL
 );
 
 --Created table for Mentor with lab_id as foreign key
 CREATE TABLE mentor(
-  id int NOT NULL,
+  id int identity(1,1) primary key,
   name varchar(50) DEFAULT NULL,
   mentor_type varchar(20) DEFAULT NULL,
   lab_id int NOT NULL,
   status int DEFAULT 1,
   creator_stamp datetime DEFAULT NULL,
   creator_user int DEFAULT NULL,
-  CONSTRAINT FK_mentor_lab_id FOREIGN KEY (lab_id) REFERENCES mentor (id),
-  PRIMARY KEY (id)
+  CONSTRAINT FK_mentor_lab_id FOREIGN KEY (lab_id) REFERENCES mentor (id)
 );
 
 --Created table for Mentor Ideation Ideation Map with mentor_id as foreign key
 CREATE TABLE mentor_ideation_map(
-  id int NOT NULL,
+  id int identity(1,1) primary key,
   mentor_id int NOT NULL,
   status int DEFAULT 1,
   creator_stamp datetime DEFAULT NULL,
   creator_user int DEFAULT NULL,
-  CONSTRAINT FK_mentor_ideation_map_mentor_id FOREIGN KEY (mentor_id) REFERENCES mentor (id),
-  PRIMARY KEY (id)
+  CONSTRAINT FK_mentor_ideation_map_mentor_id FOREIGN KEY (mentor_id) REFERENCES mentor (id)
 );
 
 --Created Mentor Tech Stack Table with mentor_id & tech_stack_id as foreign key
 CREATE TABLE mentor_techstack(
-  id int NOT NULL,
+  id int identity(1,1) primary key,
   mentor_id int NOT NULL,
   tech_stack_id int NOT NULL,
   status int DEFAULT 1,
   creator_stamp datetime DEFAULT NULL,
   creator_user int DEFAULT NULL,
-  PRIMARY KEY (id),
   CONSTRAINT FK_mentor_mentor_id FOREIGN KEY (mentor_id) REFERENCES mentor (id),
   CONSTRAINT FK_mentor_tech_stack_id FOREIGN KEY (tech_stack_id) REFERENCES tech_stack (id)
 );
 
 --Created Company Requirement Table with candidate_id as foreign key and id as primary key
 CREATE TABLE company_requirement(
-id int NOT NULL,
+id int identity(1,1) primary key,
 company_id int NOT NULL,
 candidate_id int NOT NULL,
 requested_month varchar(20) NOT NULL,
@@ -273,13 +258,12 @@ special_remark text DEFAULT NULL,
 status int DEFAULT 1,
 creator_stamp datetime DEFAULT NULL,
 creator_user int DEFAULT NULL,
-CONSTRAINT FK_candidate_candidate_id FOREIGN KEY (candidate_id) REFERENCES fellowship_candidates (id),
-PRIMARY KEY(id)
+CONSTRAINT FK_candidate_candidate_id FOREIGN KEY (candidate_id) REFERENCES fellowship_candidates (id)
 );
 
 --Created Candidate Tech Stack Assignment Table with requirement_id & candidate_id as foreign key
 CREATE TABLE candidate_techstack_assignment(
-  id int NOT NULL,
+  id int identity(1,1) primary key,
   requirement_id int NOT NULL,
   candidate_id int NOT NULL,
   assign_date datetime DEFAULT NULL,
@@ -289,13 +273,12 @@ CREATE TABLE candidate_techstack_assignment(
   CONSTRAINT FK_candidate_techstack_assignment_requirement_id 
   FOREIGN KEY (requirement_id) REFERENCES company_requirement (id),
   CONSTRAINT FK_candidates_candidate_id FOREIGN KEY (candidate_id)
-   REFERENCES fellowship_candidates (id),
-  PRIMARY KEY (id)
+   REFERENCES fellowship_candidates (id)
 );
 
 --Create Lab Threshold Table with lab_id as foreign key
 CREATE TABLE lab_threshold(
-  id int NOT NULL,
+  id int identity(1,1) primary key,
   lab_id int NOT NULL,
   lab_capacity nvarchar(50) DEFAULT NULL,
   lead_threshold int DEFAULT NULL,
@@ -303,21 +286,18 @@ CREATE TABLE lab_threshold(
   buddy_engg_threshold int DEFAULT NULL,
   status int DEFAULT 1,
   creator_stamp datetime DEFAULT NULL,
-  creator_user int DEFAULT NULL,
-  PRIMARY KEY (id),
-  --CONSTRAINT FK_lab_lab_id FOREIGN KEY (lab_id) REFERENCES candidate_lead (id)
+  creator_user int DEFAULT NULL
  );
 
  --Create User Details Table with email as UNIQUE Key & id as primary key
 CREATE TABLE user_details (
-  id int NOT NULL,
+  id int identity(1,1) primary key,
   email nvarchar(50) NOT NULL,
   UNIQUE(email),
   first_name varchar(100) NOT NULL,
   last_name varchar(100) NOT NULL,
   password nvarchar(15) NOT NULL,
   contact_number bigint NOT NULL,
-  verified bit DEFAULT NULL,
-  PRIMARY KEY (id),
-  --UNIQUE KEY UK_4d9rdl7d52k8x3etihxlaujvh (email)
+  verified bit DEFAULT NULL
 );
+
