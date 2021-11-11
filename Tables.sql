@@ -196,6 +196,7 @@ CREATE TABLE maker_program(
 
 --Created table for Lab Table
 CREATE TABLE lab(
+  id int identity(1,1) primary key,
   name varchar(50) DEFAULT NULL,
   location nvarchar(50) DEFAULT NULL,
   address  nvarchar(255) DEFAULT NULL,
@@ -213,7 +214,7 @@ CREATE TABLE mentor(
   status int DEFAULT 1,
   creator_stamp datetime DEFAULT NULL,
   creator_user int DEFAULT NULL,
-  CONSTRAINT FK_mentor_lab_id FOREIGN KEY (lab_id) REFERENCES mentor (id)
+  CONSTRAINT FK_mentor_lab_id FOREIGN KEY (lab_id) REFERENCES lab (id)
 );
 
 --Created table for Mentor Ideation Ideation Map with mentor_id as foreign key
