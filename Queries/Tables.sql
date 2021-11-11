@@ -293,3 +293,31 @@ CREATE TABLE candidate_techstack_assignment(
   PRIMARY KEY (id)
 );
 
+--Create Lab Threshold Table with lab_id as foreign key
+CREATE TABLE lab_threshold(
+  id int NOT NULL,
+  lab_id int NOT NULL,
+  lab_capacity nvarchar(50) DEFAULT NULL,
+  lead_threshold int DEFAULT NULL,
+  ideation_engg_threshold int DEFAULT NULL,
+  buddy_engg_threshold int DEFAULT NULL,
+  status int DEFAULT 1,
+  creator_stamp datetime DEFAULT NULL,
+  creator_user int DEFAULT NULL,
+  PRIMARY KEY (id),
+  --CONSTRAINT FK_lab_lab_id FOREIGN KEY (lab_id) REFERENCES candidate_lead (id)
+ );
+
+ --Create User Details Table with email as UNIQUE Key & id as primary key
+CREATE TABLE user_details (
+  id int NOT NULL,
+  email nvarchar(50) NOT NULL,
+  UNIQUE(email),
+  first_name varchar(100) NOT NULL,
+  last_name varchar(100) NOT NULL,
+  password nvarchar(15) NOT NULL,
+  contact_number bigint NOT NULL,
+  verified bit DEFAULT NULL,
+  PRIMARY KEY (id),
+  --UNIQUE KEY UK_4d9rdl7d52k8x3etihxlaujvh (email)
+);
