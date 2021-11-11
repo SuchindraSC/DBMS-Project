@@ -120,3 +120,122 @@ CREATE TABLE candidate_qualification(
   creator_user int DEFAULT NULL,
   CONSTRAINT FK_candidate_qual_candidate_id FOREIGN KEY (candidate_id) REFERENCES fellowship_candidates (id),
  );
+
+  --Created table for Candidate Education Detailed Check
+ CREATE TABLE candidates_education_det_check (
+  id int NOT NULL,
+  candidate_id  int NOT NULL,
+  field_name int NOT NULL,
+  is_verified int DEFAULT NULL,
+  lastupd_stamp datetime DEFAULT NULL,
+  lastupd_user int DEFAULT NULL,
+  creator_stamp datetime DEFAULT NULL,
+  creator_user int DEFAULT NULL
+);
+
+--Created table for Candidate Documents with candidate id as foreign key 
+CREATE TABLE candidate_docs(
+  id int NOT NULL,
+  PRIMARY KEY (id),
+  candidate_id int NOT NULL,
+  doc_type nvarchar(20) DEFAULT NULL,
+  doc_path nvarchar(500) DEFAULT NULL,
+  status int DEFAULT 1,
+  creator_stamp datetime DEFAULT NULL,
+  creator_user int DEFAULT NULL,
+  CONSTRAINT FK_candidate_docs_candidate_id FOREIGN KEY (candidate_id) REFERENCES fellowship_candidates (id),
+); 
+
+--Created table for User Roles
+CREATE TABLE user_roles (
+  user_id int NOT NULL ,
+  role_name varchar(100)
+);
+
+--Created table for Company Table with id as primary key
+CREATE TABLE company(
+  id int NOT NULL,
+  name int NOT NULL,
+  address nvarchar(150) DEFAULT NULL,
+  location nvarchar(50) DEFAULT NULL,
+  status int DEFAULT 1,
+  creator_stamp datetime DEFAULT NULL,
+  creator_user int DEFAULT NULL,
+  PRIMARY KEY (id)
+);
+
+--Created table for Techstack Table with id as primary key
+CREATE TABLE tech_stack (
+  id int NOT NULL,
+  tech_name varchar(50) NOT NULL,
+  image_path nvarchar(500) DEFAULT NULL,
+  framework text DEFAULT NULL,
+  cur_status char(1) DEFAULT NULL,
+  creator_stamp datetime DEFAULT NULL,
+  creator_user int DEFAULT NULL,
+  PRIMARY KEY (id)
+);
+
+--Created table for Tech Type with id as primary key
+CREATE TABLE tech_type (
+  id int NOT NULL,
+  type_name varchar(50) NOT NULL,
+  cur_status char(1) DEFAULT NULL,
+  creator_stamp datetime DEFAULT NULL,
+  creator_user int DEFAULT NULL,
+  PRIMARY KEY (id)
+);
+
+--Created table for Make Program with tech_stack_id & tech_type_id as foreign key
+CREATE TABLE maker_program(
+  id int NOT NULL,
+  program_name int NOT NULL,
+  program_type varchar(10) DEFAULT NULL,
+  program_link text DEFAULT NULL,
+  tech_stack_id int DEFAULT NULL,
+  tech_type_id int NOT NULL,
+  is_program_approved int,
+  description nvarchar(500) DEFAULT NULL,
+  status int DEFAULT 1,
+  creator_stamp datetime DEFAULT NULL,
+  creator_user int DEFAULT NULL,
+  CONSTRAINT FK_maker_program_tech_stack_id FOREIGN KEY (tech_stack_id) REFERENCES tech_stack (id),
+  CONSTRAINT FK_maker_program_tech_type_id FOREIGN KEY (tech_type_id) REFERENCES tech_type (id),
+  PRIMARY KEY (id)
+);
+
+--Created table for Lab Table
+CREATE TABLE lab(
+  id int NOT NULL,
+  name varchar(50) DEFAULT NULL,
+  location nvarchar(50) DEFAULT NULL,
+  address  nvarchar(255) DEFAULT NULL,
+  status int DEFAULT 1,
+  creator_stamp datetime DEFAULT NULL,
+  creator_user int DEFAULT NULL,
+  PRIMARY KEY (id)
+);
+
+--Created table for Mentor with lab_id as foreign key
+CREATE TABLE mentor(
+  id int NOT NULL,
+  name varchar(50) DEFAULT NULL,
+  mentor_type varchar(20) DEFAULT NULL,
+  lab_id int NOT NULL,
+  status int DEFAULT 1,
+  creator_stamp datetime DEFAULT NULL,
+  creator_user int DEFAULT NULL,
+  CONSTRAINT FK_mentor_lab_id FOREIGN KEY (lab_id) REFERENCES mentor (id),
+  PRIMARY KEY (id)
+);
+
+--Created table for Mentor Ideation Ideation Map with mentor_id as foreign key
+CREATE TABLE mentor_ideation_map(
+  id int NOT NULL,
+  mentor_id int NOT NULL,
+  status int DEFAULT 1,
+  creator_stamp datetime DEFAULT NULL,
+  creator_user int DEFAULT NULL,
+  CONSTRAINT FK_mentor_ideation_map_mentor_id FOREIGN KEY (mentor_id) REFERENCES mentor (id),
+  PRIMARY KEY (id)
+); 
