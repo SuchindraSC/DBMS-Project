@@ -238,4 +238,58 @@ CREATE TABLE mentor_ideation_map(
   creator_user int DEFAULT NULL,
   CONSTRAINT FK_mentor_ideation_map_mentor_id FOREIGN KEY (mentor_id) REFERENCES mentor (id),
   PRIMARY KEY (id)
-); 
+);
+
+--Created Mentor Tech Stack Table with mentor_id & tech_stack_id as foreign key
+CREATE TABLE mentor_techstack(
+  id int NOT NULL,
+  mentor_id int NOT NULL,
+  tech_stack_id int NOT NULL,
+  status int DEFAULT 1,
+  creator_stamp datetime DEFAULT NULL,
+  creator_user int DEFAULT NULL,
+  PRIMARY KEY (id),
+  CONSTRAINT FK_mentor_mentor_id FOREIGN KEY (mentor_id) REFERENCES mentor (id),
+  CONSTRAINT FK_mentor_tech_stack_id FOREIGN KEY (tech_stack_id) REFERENCES tech_stack (id)
+);
+
+--Created Company Requirement Table with candidate_id as foreign key and id as primary key
+CREATE TABLE company_requirement(
+id int NOT NULL,
+company_id int NOT NULL,
+candidate_id int NOT NULL,
+requested_month varchar(20) NOT NULL,
+city varchar(20) DEFAULT NULL,
+is_doc_verification int DEFAULT 1,
+requirement_doc_path varchar(500) DEFAULT NULL,
+no_of_engg int NOT NULL,
+tech_stack_id int NOT NULL,
+tech_type_id int NOT NULL,
+maker_programs_id int NOT NULL,
+lead_id int NOT NULL,
+ideateion_engg_id int DEFAULT NULL,
+buddy_engg_id int  DEFAULT NULL,
+special_remark text DEFAULT NULL,
+status int DEFAULT 1,
+creator_stamp datetime DEFAULT NULL,
+creator_user int DEFAULT NULL,
+CONSTRAINT FK_candidate_candidate_id FOREIGN KEY (candidate_id) REFERENCES fellowship_candidates (id),
+PRIMARY KEY(id)
+);
+
+--Created Candidate Tech Stack Assignment Table with requirement_id & candidate_id as foreign key
+CREATE TABLE candidate_techstack_assignment(
+  id int NOT NULL,
+  requirement_id int NOT NULL,
+  candidate_id int NOT NULL,
+  assign_date datetime DEFAULT NULL,
+  status varchar(20) DEFAULT NULL,
+  creator_stamp datetime DEFAULT NULL,
+  creator_user int DEFAULT NULL,
+  CONSTRAINT FK_candidate_techstack_assignment_requirement_id 
+  FOREIGN KEY (requirement_id) REFERENCES company_requirement (id),
+  CONSTRAINT FK_candidates_candidate_id FOREIGN KEY (candidate_id)
+   REFERENCES fellowship_candidates (id),
+  PRIMARY KEY (id)
+);
+
