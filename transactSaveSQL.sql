@@ -35,16 +35,15 @@ BEGIN
 	BEGIN TRANSACTION
 		BEGIN TRY 
 			INSERT INTO [dbo].[lab](id, name, location, address, status, creator_stamp, creator_user) values (@id, @name, @location, @address, @status ,@creator_stamp, @creator_user)
-			--SAVE TRANSACTION FirstInsert
-
-			--INSERT INTO [dbo].[mentor](id, name, mentor_type, lab_id, status, creator_stamp, creator_user) values ( @id, @name, @mentor_type, @lab_id, @status, @creator_stamp, @creator_user)
+			SAVE TRANSACTION FirstInsert
+			INSERT INTO [dbo].[mentor](id, name, mentor_type, lab_id, status, creator_stamp, creator_user) values ( @id, @name, @mentor_type, @lab_id, @status, @creator_stamp, @creator_user)
 			COMMIT TRANSACTION
 		END TRY
 		BEGIN CATCH
 			IF(@@ERROR > 0)
 			BEGIN 
 				PRINT 'ROLLBACK is working'
-				ROLLBACK TRANSACTION
+				ROLLBACK TRANSACTION FIrstInsert
 			END
 		END CATCH
 END
