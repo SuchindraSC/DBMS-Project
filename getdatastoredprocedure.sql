@@ -20,12 +20,18 @@ GO
 -- Create date: <Create Date,,>
 -- Description:	<Description,,>
 -- =============================================
-CREATE PROCEDURE [sp_getdatastoredprocedure] 
+ALTER PROCEDURE [sp_getdatastoredprocedure] 
 	@id int
 	
 AS
 BEGIN
-	select * from [dbo].[lab]
+	BEGIN TRY
+		select * from [dbo].[lab]
+	END TRY
+	BEGIN CATCH
+		IF (@@ERROR > 0)
+		 PRINT 'Get Data From Table Failed';
+	END CATCH
 END
 GO
 

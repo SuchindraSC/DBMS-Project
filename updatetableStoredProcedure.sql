@@ -20,7 +20,7 @@ GO
 -- Create date: <Create Date,,>
 -- Description:	<Description,,>
 -- =============================================
-CREATE PROCEDURE [updatetableStoredProcedure]
+ALTER PROCEDURE [updatetableStoredProcedure]
 	@id int,
 	@name varchar(50),
     @location nvarchar(50),
@@ -30,8 +30,14 @@ CREATE PROCEDURE [updatetableStoredProcedure]
     @creator_user int
 AS
 BEGIN
-	UPDATE [dbo].[lab] SET name = @name, location = @location, address = @address, status = @status, creator_stamp = @creator_stamp,
-    creator_user = @creator_user WHERE id = @id
+	BEGIN TRY
+		UPDATE [dbo].[lab] SET name = @name, location = @location, address = @address, status = @status, creator_stamp = @creator_stamp,
+		creator_user = @creator_user WHERE id = @id
+	END TRY
+	BEGIN CATCH
+		IF (@@ERROR > 0)
+			PRINT 'Update Data In Table Failed';
+	END CATCH
 END
 GO
 

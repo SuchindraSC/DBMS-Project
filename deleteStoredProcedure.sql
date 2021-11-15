@@ -20,12 +20,18 @@ GO
 -- Create date: <Create Date,,>
 -- Description:	<Description,,>
 -- =============================================
-CREATE PROCEDURE [sp_deleteStoredProcedure]
+ALTER PROCEDURE [sp_deleteStoredProcedure]
 	@id int
 	
 AS
 BEGIN
-	DELETE FROM [dbo].[lab] Where id = @id
+	BEGIN TRY
+		DELETE FROM [dbo].[lab] Where id = @id
+	END TRY
+	BEGIN CATCH
+		IF (@@ERROR > 0)
+		PRINT 'Delete Data From Table Failed';
+	END CATCH
 END
 GO
 
